@@ -11,18 +11,18 @@ import { UserCard } from "../ordanisms/user/UserCard";
 import { useAllUsers } from "../../hooks/useAllUsers";
 import { UserDetailModal } from "../ordanisms/user/UserDetailModal";
 import { useSelectUser } from "../../hooks/useSelectUser";
-// import { useLoginUser } from "../../../hooks/providers/useLoginUserProvider";
+import { useLoginUser } from "../../hooks/useLoginUser";
 
 export const UserManagement: VFC = memo(() => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { getUsers, loading, users } = useAllUsers();
   const { onSelectUser, selectedUser } = useSelectUser();
-  //   const { loginUser } = useLoginUser();
+  const { loginUser } = useLoginUser();
+  console.log("111",loginUser)
 
   useEffect(() => getUsers(), [getUsers]);
 
-  const onClickUser = useCallback(
-    (id: number) => {
+  const onClickUser = useCallback((id: number) => {
       onSelectUser({ id, users, onOpen });
     },
     [users, onSelectUser, onOpen]
@@ -51,7 +51,7 @@ export const UserManagement: VFC = memo(() => {
       )}
       <UserDetailModal
         isOpen={isOpen}
-        //isAdmin={loginUser?.isAdmin}
+        isAdmin={loginUser?.isAdmin}
         onClose={onClose}
         user={selectedUser}
       />
